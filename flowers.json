@@ -1,0 +1,116 @@
+{
+    "flowers": [
+      {
+        "id": 1,
+        "name": "Букет нежность",
+        "color": "Кремовый",
+        "price": 2500,
+        "photo": "./src/img/1.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Букет экзотика",
+        "color": "Зеленый",
+        "price": 3000,
+        "photo": "./src/img/2.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет сказка",
+        "color": "Белый",
+        "price": 2000,
+        "photo": "./src/img/3.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет радость",
+        "color": "Желтый",
+        "price": 2000,
+        "photo": "./src/img/4.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет бабл-гам",
+        "color": "Розовый",
+        "price": 3500,
+        "photo": "./src/img/5.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/6.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/7.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/8.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/9.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/10.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/11.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/12.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/13.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/14.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/15.jpg"
+      },
+      {
+        "id": 1,
+        "name": "Букет",
+        "color": "Сиреневый",
+        "price": 150,
+        "photo": "./src/img/16.jpg"
+      }
+        ]
+  }
