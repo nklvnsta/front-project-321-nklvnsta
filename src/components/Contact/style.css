@@ -1,0 +1,36 @@
+.contact-card {
+    width: 300px;
+    margin-top: 16px;
+  }
+  
+  .working-hours-card {
+    width: 300px;
+    margin-top: 16px;
+  }
+  
+.contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .contact-card,
+  .working-hours-card,
+  .google-map-card {
+    width: 300px;
+    margin: 10px;
+  }
+  
+  .google-map-card {
+    width: 100%;
+  }
+  
+  .text-div {
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+  }
+  
+
+  
