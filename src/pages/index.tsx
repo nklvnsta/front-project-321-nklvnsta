@@ -1,6 +1,4 @@
-import CatalogPage from "./catalog";
-import HomePage from "./home";
-import ContactPage from "./contact";
-import ReviewsPage from "./reviews";
-
-export {HomePage,ContactPage,ReviewsPage,CatalogPage}
+export { default as CatalogPage } from "./catalog";
+export { default as HomePage } from "./home";
+export { default as ContactPage } from "./contact";
+export { default as ReviewsPage } from "./reviews";

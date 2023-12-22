@@ -1,10 +1,15 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Card, Skeleton, Avatar, Typography } from 'antd';
 import { EnvironmentOutlined, PhoneOutlined, ClockCircleOutlined } from '@ant-design/icons';
-import './style.css';
+import styled from 'styled-components';
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
+
+const StyledCard = styled(Card)`
+  margin-bottom: 16px; 
+  margin-top: 20px;
+`;
 
 interface IContact {
   title: string;
@@ -37,9 +42,9 @@ const Contact: FC = () => {
   const workingHours = 'Пн-Вс: 10:00 - 20:00';
 
   return (
-    <div className="contact-container">
+    <div className="container">
       {contacts.map(({ title, description, icon }) => (
-        <Card key={title} className="contact-card">
+        <StyledCard  key={title} className="contact-card">
           <Skeleton loading={isLoading} avatar active>
             <Meta
               avatar={<Avatar icon={icon} />}
@@ -47,7 +52,7 @@ const Contact: FC = () => {
               description={description}
             />
           </Skeleton>
-        </Card>
+        </StyledCard >
       ))}
       <Card className="working-hours-card">
         <Skeleton loading={isLoading} active>
