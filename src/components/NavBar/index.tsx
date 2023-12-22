@@ -12,14 +12,14 @@ const StyledMenu = styled(Menu)`
 
   .ant-menu-item {
     &:hover {
-      background-color: #f0f0f0; /* Change the background color on hover */
+      background-color: #f0f0f0; 
     }
   }
 
   .ant-btn {
     margin-right: 8px;
     &:hover {
-      background-color: #ffffff; /* Change the background color on hover */
+      background-color: #ffffff; 
       border-color: #1890ff;
     }
   }
