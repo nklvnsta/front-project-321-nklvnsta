@@ -9,6 +9,8 @@ const StyledMenu = styled(Menu)`
   margin-bottom: 2em;
   display: flex;
   justify-content: space-between;
+  background-color: var(--bg-color);
+  color:var(--text-color);
 
   .ant-menu-item {
     &:hover {
