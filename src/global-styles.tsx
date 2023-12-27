@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300&display=swap');
+
 * {
     box-sizing:border-box
 }
@@ -17,6 +19,9 @@ const GlobalStyles = createGlobalStyle`
         background-color: var(--background-color);
         color: var(--text-color);
         transition: background-color 0.3s, color 0.3s;
+        font-family: 'Nunito Sans';
+    margin: 0;
+    padding: 0;
     }
 
     html[data-theme=dark] {
