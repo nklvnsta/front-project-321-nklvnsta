@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import  { FC } from 'react';
 import { List, Avatar, Typography, Divider, Rate, Card } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import styled from 'styled-components';

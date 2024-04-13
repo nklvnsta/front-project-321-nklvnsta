@@ -1,32 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Table, Button, Typography } from 'antd';
+import { Typography } from 'antd';
+import { StyledContainer, StyledTable, NavigationButtons, NavigationButton } from './style';
 import type { ColumnsType } from 'antd/es/table';
-import styled from 'styled-components';
 
 const { Title } = Typography;
-
-const StyledContainer = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-`;
-
-const StyledTable = styled(Table)`
-  margin-top: 20px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-`;
-
-const NavigationButtons = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-`;
-
-const NavigationButton = styled(Button)`
-  margin: 0 8px;
-`;
 
 const LIMIT = 10;
 
@@ -75,7 +52,6 @@ const Catalog: FC = () => {
   return (
     <StyledContainer>
       <Title level={3}>Каталог</Title>
-      <StyledTable dataSource={dataSource} columns={columns} loading={isLoading} pagination={false} />
       <NavigationButtons>
         <NavigationButton onClick={() => setPages({ page: 1, maxPages: 1 })} disabled={true}>
           Назад

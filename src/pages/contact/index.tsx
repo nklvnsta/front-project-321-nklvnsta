@@ -1,5 +1,5 @@
-import React,{FC} from 'react'
-import Contact from '../../components/Contact'
+import {FC} from 'react'
+import Contact from '../contact'
 
 
 

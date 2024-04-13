@@ -1,31 +1,9 @@
-import React, { FC, useState } from 'react';
-import { Button, Menu, Flex } from 'antd';
+import { FC, useState } from 'react';
+import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { CATALOG, HOME, REVIEWS, CONTACT } from '../../app/routing/config';
 import { useAuth } from '../../hooks/useAuth';
-import styled from 'styled-components';
-
-const StyledMenu = styled(Menu)`
-  margin-bottom: 2em;
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--bg-color);
-  color:var(--text-color);
-
-  .ant-menu-item {
-    &:hover {
-      background-color: #f0f0f0; 
-    }
-  }
-
-  .ant-btn {
-    margin-right: 8px;
-    &:hover {
-      background-color: #ffffff; 
-      border-color: #1890ff;
-    }
-  }
-`;
+import { StyledMenu } from './style';
 
 const NavBar: FC = () => {
   const { isAuth, setIsAuth } = useAuth();
