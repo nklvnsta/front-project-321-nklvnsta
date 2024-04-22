@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Typography, Card } from 'antd';
+import styled from "styled-components";
+import { Typography, Card } from "antd";
 
 const { Title, Paragraph } = Typography;
 

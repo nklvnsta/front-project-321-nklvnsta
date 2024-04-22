@@ -1,25 +1,14 @@
-import React, { FC} from 'react'
+import React, { FC } from "react";
 
-import NavBar from './components/NavBar';
-import MainRouter from './app/routing';
-
-
-
+import NavBar from "./components/NavBar";
+import MainRouter from "./app/routing";
 
 const App: FC = () => {
-
-
   return (
-
     <>
-     
-        <NavBar />
-        <MainRouter />
-     
+      <NavBar />
+      <MainRouter />
     </>
-  )
-
-}
-export default App
-
-
+  );
+};
+export default App;

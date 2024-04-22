@@ -1,10 +1,8 @@
-import React,{FC} from 'react'
-import Reviews from '../../components/Reviews'
+import React, { FC } from "react";
+import Reviews from "../../components/Reviews";
 
+const ReviewsPage: FC = () => {
+  return <Reviews />;
+};
 
-
-const ReviewsPage : FC = () => {
-  return <Reviews/>
-}
-
-export default ReviewsPage
+export default ReviewsPage;

@@ -1,9 +1,8 @@
-
-import React, { FC } from 'react';
-import { List, Avatar, Rate, Divider } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import { MyTitle, ReviewCard } from './style';
-import Paragraph from 'antd/es/skeleton/Paragraph';
+import React, { FC } from "react";
+import { List, Avatar, Rate, Divider } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { MyTitle, ReviewCard } from "./style";
+import Paragraph from "antd/es/skeleton/Paragraph";
 
 interface Review {
   username: string;
@@ -14,8 +13,8 @@ interface Review {
 const Reviews: FC = () => {
   const reviews: Review[] = [
     {
-      username: 'Иванов Иван',
-      comment: 'Цветы были потрясающими! Отличный сервис.',
+      username: "Иванов Иван",
+      comment: "Цветы были потрясающими! Отличный сервис.",
       rating: 5,
     },
     // остальные отзывы...
@@ -35,7 +34,7 @@ const Reviews: FC = () => {
                 </>
               }
               description={<Paragraph>{item.comment}</Paragraph>}
-              />           
+            />
           </List.Item>
         </ReviewCard>
       ))}

@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { Card } from 'antd';
+import styled from "styled-components";
+import { Card } from "antd";
 
 export const StyledCard = styled(Card)`
-  margin-bottom: 16px; 
+  margin-bottom: 16px;
   margin-top: 20px;
 `;
 
@@ -12,7 +12,7 @@ export const FeedbackForm = styled.div`
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   margin-top: 50px;
   background-color: #fefefe;
   color: #000000;
