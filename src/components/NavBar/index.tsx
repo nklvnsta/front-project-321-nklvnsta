@@ -1,31 +1,8 @@
 import React, { FC, useState } from 'react';
-import { Button, Menu, Flex } from 'antd';
 import { Link } from 'react-router-dom';
 import { CATALOG, HOME, REVIEWS, CONTACT } from '../../app/routing/config';
 import { useAuth } from '../../hooks/useAuth';
-import styled from 'styled-components';
-
-const StyledMenu = styled(Menu)`
-  margin-bottom: 2em;
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--bg-color);
-  color:var(--text-color);
-
-  .ant-menu-item {
-    &:hover {
-      background-color: #f0f0f0; 
-    }
-  }
-
-  .ant-btn {
-    margin-right: 8px;
-    &:hover {
-      background-color: #ffffff; 
-      border-color: #1890ff;
-    }
-  }
-`;
+import { StyledMenu, StyledButton } from './style';
 
 const NavBar: FC = () => {
   const { isAuth, setIsAuth } = useAuth();
@@ -55,12 +32,14 @@ const NavBar: FC = () => {
       key: 'contact',
     },
     {
-      label: <Button onClick={changeTheme}>Сменить тему</Button>,
+      label: <StyledButton onClick={changeTheme}>Сменить тему</StyledButton>,
       key: 'theme',
     },
     {
       label: (
-        <Button onClick={() => setIsAuth(!isAuth)}>{isAuth ? 'Выйти' : 'Войти'}</Button>
+        <StyledButton onClick={() => setIsAuth(!isAuth)}>
+          {isAuth ? 'Выйти' : 'Войти'}
+        </StyledButton>
       ),
       key: 'auth',
     },
