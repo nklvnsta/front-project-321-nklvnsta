@@ -3,6 +3,9 @@ import { Card, Skeleton, Avatar, Typography } from 'antd';
 import { EnvironmentOutlined, PhoneOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { SubmitHandler, useForm } from "react-hook-form";
+import MyDocument from "../FileDcument/index"
+import {PDFDownloadLink} from "@react-pdf/renderer"
+import { FeedbackForm } from './style';
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -12,83 +15,11 @@ const StyledCard = styled(Card)`
   margin-top: 20px;
 `;
 
-const FeedbackForm = styled.div`
-max-width: 400px;
-margin: 0 auto;
-padding: 20px;
-border: 1px solid #ccc;
-border-radius: 5px;
-font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
-margin-top: 50px;
-background-color: #fefefe;
-color: #000000;
-
-    h2 {
-        font-size: 1.5em;
-        margin-bottom: 20px;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-
-        div {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-
-            label {
-                margin-bottom: 5px;
-            }
-
-            input {
-                padding: 8px;
-                border: 1px solid #000000;
-                border-radius: 3px;
-            }
-
-            div {
-                color: #f40000;
-                font-size: 0.8em;
-            }
-        }
-
-        button {
-            padding: 10px;
-            background-color: #3498db;
-            color: #000000;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-
-            &:hover {
-                background-color: #2980b9;
-            }
-
-            &:active {
-                background-color: #216a94;
-            }
-
-            &:disabled {
-                background-color: #ccc;
-                cursor: not-allowed;
-            }
-
-        }
-        
-    }
-
-    p {
-        margin-top: 20px;
-        font-size: 1.2em;
-    }
-`;
-
 interface IMyForm {
   name: string;
   number: number;
   flower: string;
+  picture: string;
 }
 
 
@@ -128,17 +59,34 @@ const Contact: FC = () => {
     },
   ];
 
-  const saveElement: SubmitHandler<IMyForm> = data => {
-    // здесь мы передаём новый массив, который содержит все старые элементы и новый
-    // ...prev - мы получаем все элементы текущего стэйте (с помощью spread оператора)
-        setTasks((prev) => [...prev, data])
-        reset();
-    }
+  const [created,setCreated] = useState<boolean>(false);
 
-  
   const [tasks, setTasks] = useState<IMyForm[]>([])
 
   const workingHours = 'Пн-Вс: 10:00 - 20:00';
+
+  const saveElement: SubmitHandler<IMyForm> = (data) => {
+
+    const reader = new FileReader();
+
+    const { picture, name,number, flower } = data;
+
+    reader.readAsDataURL(picture[0])
+
+    reader.onload = () =>{
+       
+        const newTask = {
+        flower,
+            name,
+           number,
+            picture: reader.result as string,
+          };
+          reset();
+          setTasks((prev) => [newTask, ...prev]);
+          setCreated(true)
+    }
+  
+  };
 
   return (
     <div className="container">
@@ -153,7 +101,7 @@ const Contact: FC = () => {
           </Skeleton>
         </StyledCard >
       ))}
-      <Card className="working-hours-card">
+   <Card className="working-hours-card">
         <Skeleton loading={isLoading} active>
           <Meta
             avatar={<Avatar icon={<ClockCircleOutlined />} />}
@@ -162,11 +110,10 @@ const Contact: FC = () => {
           />
         </Skeleton>
       </Card>
-      <div>
-         <FeedbackForm>
+      <FeedbackForm>
     <h2>Форма обратной связи:</h2>
       <form onSubmit={handleSubmit(saveElement)}>
-    <div>
+  
         <label htmlFor="name">Имя:</label>
         <input 
             {...register('name', {
@@ -177,9 +124,7 @@ const Contact: FC = () => {
                 }
             })}
         />
-        <div>{errors.name?.message}</div>
-    </div>
-    <div>
+        <div>{errors.name?.message}</div> 
         <label htmlFor="number">Номер телефона:</label>
         <input 
             {...register('number', {
@@ -195,8 +140,6 @@ const Contact: FC = () => {
             })}
         />
         <div>{errors.number?.message}</div>
-    </div>
-    <div>
         <label htmlFor="flower">Цветок:</label>
         <input 
             {...register('flower', {
@@ -207,20 +150,40 @@ const Contact: FC = () => {
                 }
             })}
         />
-        
-    </div>
-    <button disabled={!isValid} type="submit">Сохранить</button>
-</form>
+        <label htmlFor="picture">Картинка:</label>
+         <input
+         id="picture"
+          type="file"
+          accept="image/*"
+          {...register("picture", {
+            required: "Please select picture!",
+          })}
+        />
+                    <button disabled={!isValid} type="submit">Сохранить</button>
 
-{tasks.map((task) => 
+        </form>
+        { created && <PDFDownloadLink
+                    document={
+                        <MyDocument document={tasks[0]} />
+                    }
+                    fileName="post.pdf"  
+                >
+                    {({blob, url, loading, error}) => (loading ? 'Loading...' : 'Download')}
+        </PDFDownloadLink>}
+        {tasks.map((task) => 
+<>
     <p key={task.number}>
         Имя: {task.name} - Номер: {task.number} - Цветок: {task.flower}
     </p>
+    <img src= {task.picture} alt="картинка" height={180} style={{
+                                width: '100%',
+                                objectFit: 'cover',
+                                objectPosition:'center'
+                              }} />
+    </>
 )}
-        </FeedbackForm>
-
-
- <div className="text-div">
+        </FeedbackForm>  
+        <div className="text-div">
         <h2>Добро пожаловать в наш магазин цветов!</h2>
         <p>Мы с удовольствием поможем вам с выбором прекрасных цветов и оформлением букетов для любого случая.</p>
       </div>
@@ -235,8 +198,7 @@ const Contact: FC = () => {
         ></iframe>
       </div>
     </div>
-    </div>
-  );
+  )
 };
 
-export default Contact;
+export default Contact
