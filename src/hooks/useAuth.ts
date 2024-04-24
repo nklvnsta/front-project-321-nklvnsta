@@ -1,6 +1,6 @@
-import {useContext} from 'react'
-import { ctx } from '../context'
+import { useContext } from "react";
+import { ctx } from "../context";
 
-export const useAuth = () =>{
-    return useContext(ctx)
-}
+export const useAuth = () => {
+  return useContext(ctx);
+};

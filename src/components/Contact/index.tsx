@@ -1,17 +1,17 @@
-import React, { FC, useState, useEffect } from 'react';
-import { Card, Skeleton, Avatar, Typography } from 'antd';
-import { EnvironmentOutlined, PhoneOutlined, ClockCircleOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
+import React, { FC, useState, useEffect } from "react";
+import { Card, Skeleton, Avatar, Typography } from "antd";
+import { EnvironmentOutlined, PhoneOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import styled from "styled-components";
 import { SubmitHandler, useForm } from "react-hook-form";
-import MyDocument from "../FileDcument/index"
-import {PDFDownloadLink} from "@react-pdf/renderer"
-import { FeedbackForm } from './style';
+import MyDocument from "../FileDcument/index";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { FeedbackForm } from "./style";
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
 
 const StyledCard = styled(Card)`
-  margin-bottom: 16px; 
+  margin-bottom: 16px;
   margin-top: 20px;
 `;
 
@@ -21,7 +21,6 @@ interface IMyForm {
   flower: string;
   picture: string;
 }
-
 
 interface IContact {
   title: string;
@@ -33,11 +32,11 @@ const Contact: FC = () => {
   const {
     register, // метод для регистрации вашего инпута, для дальнейшей работы с ним
     handleSubmit, // метод для получения данных формы, если валидация прошла успешна
-    formState: {errors,isValid}, // errors - список ошибок валидации для всех полей формы
-    reset // метод для очистки полей формы
-} = useForm<IMyForm>({
+    formState: { errors, isValid }, // errors - список ошибок валидации для всех полей формы
+    reset, // метод для очистки полей формы
+  } = useForm<IMyForm>({
     mode: "onBlur", // парметр onBlur - отвечает за запуск валидации при не активном состоянии поля
-})
+  });
   const [isLoading, setLoading] = useState<boolean>(true);
 
   const delay = (ms: number) => new Promise((res) => setTimeout(() => setLoading(false), ms));
@@ -48,60 +47,53 @@ const Contact: FC = () => {
 
   const contacts: IContact[] = [
     {
-      title: 'Адрес',
-      description: 'ул. Михалковская, 7к3',
+      title: "Адрес",
+      description: "ул. Михалковская, 7к3",
       icon: <EnvironmentOutlined />,
     },
     {
-      title: 'Телефон',
-      description: '+7 (977) 118-1899',
+      title: "Телефон",
+      description: "+7 (977) 118-1899",
       icon: <PhoneOutlined />,
     },
   ];
 
-  const [created,setCreated] = useState<boolean>(false);
+  const [created, setCreated] = useState<boolean>(false);
 
-  const [tasks, setTasks] = useState<IMyForm[]>([])
+  const [tasks, setTasks] = useState<IMyForm[]>([]);
 
-  const workingHours = 'Пн-Вс: 10:00 - 20:00';
+  const workingHours = "Пн-Вс: 10:00 - 20:00";
 
   const saveElement: SubmitHandler<IMyForm> = (data) => {
-
     const reader = new FileReader();
 
-    const { picture, name,number, flower } = data;
+    const { picture, name, number, flower } = data;
 
-    reader.readAsDataURL(picture[0])
+    reader.readAsDataURL(picture[0]);
 
-    reader.onload = () =>{
-       
-        const newTask = {
+    reader.onload = () => {
+      const newTask = {
         flower,
-            name,
-           number,
-            picture: reader.result as string,
-          };
-          reset();
-          setTasks((prev) => [newTask, ...prev]);
-          setCreated(true)
-    }
-  
+        name,
+        number,
+        picture: reader.result as string,
+      };
+      reset();
+      setTasks((prev) => [newTask, ...prev]);
+      setCreated(true);
+    };
   };
 
   return (
     <div className="container">
       {contacts.map(({ title, description, icon }) => (
-        <StyledCard  key={title} className="contact-card">
+        <StyledCard key={title} className="contact-card">
           <Skeleton loading={isLoading} avatar active>
-            <Meta
-              avatar={<Avatar icon={icon} />}
-              title={title}
-              description={description}
-            />
+            <Meta avatar={<Avatar icon={icon} />} title={title} description={description} />
           </Skeleton>
-        </StyledCard >
+        </StyledCard>
       ))}
-   <Card className="working-hours-card">
+      <Card className="working-hours-card">
         <Skeleton loading={isLoading} active>
           <Meta
             avatar={<Avatar icon={<ClockCircleOutlined />} />}
@@ -111,79 +103,81 @@ const Contact: FC = () => {
         </Skeleton>
       </Card>
       <FeedbackForm>
-    <h2>Форма обратной связи:</h2>
-      <form onSubmit={handleSubmit(saveElement)}>
-  
-        <label htmlFor="name">Имя:</label>
-        <input 
-            {...register('name', {
-                required: "Поле обязательно для заполнения",
-                minLength: {
-                    value: 5,
-                    message: "Нужно больше символов"
-                }
+        <h2>Форма обратной связи:</h2>
+        <form onSubmit={handleSubmit(saveElement)}>
+          <label htmlFor="name">Имя:</label>
+          <input
+            {...register("name", {
+              required: "Поле обязательно для заполнения",
+              minLength: {
+                value: 5,
+                message: "Нужно больше символов",
+              },
             })}
-        />
-        <div>{errors.name?.message}</div> 
-        <label htmlFor="number">Номер телефона:</label>
-        <input 
-            {...register('number', {
-                required: "Поле обязательно для заполнения",
-                minLength: {
-                    value: 5,
-                    message: "Нужно больше символов"
-                },
-                pattern: {
-                    value: /^\+7\d{10}$/,
-                    message: "Введите номер в формате +7XXXXXXXXXX"
-                }
+          />
+          <div>{errors.name?.message}</div>
+          <label htmlFor="number">Номер телефона:</label>
+          <input
+            {...register("number", {
+              required: "Поле обязательно для заполнения",
+              minLength: {
+                value: 5,
+                message: "Нужно больше символов",
+              },
+              pattern: {
+                value: /^\+7\d{10}$/,
+                message: "Введите номер в формате +7XXXXXXXXXX",
+              },
             })}
-        />
-        <div>{errors.number?.message}</div>
-        <label htmlFor="flower">Цветок:</label>
-        <input 
-            {...register('flower', {
-                required: "Поле обязательно для заполнения",
-                minLength: {
-                    value: 5,
-                    message: "Нужно больше символов"
-                }
+          />
+          <div>{errors.number?.message}</div>
+          <label htmlFor="flower">Цветок:</label>
+          <input
+            {...register("flower", {
+              required: "Поле обязательно для заполнения",
+              minLength: {
+                value: 5,
+                message: "Нужно больше символов",
+              },
             })}
-        />
-        <label htmlFor="picture">Картинка:</label>
-         <input
-         id="picture"
-          type="file"
-          accept="image/*"
-          {...register("picture", {
-            required: "Please select picture!",
-          })}
-        />
-                    <button disabled={!isValid} type="submit">Сохранить</button>
-
+          />
+          <label htmlFor="picture">Картинка:</label>
+          <input
+            id="picture"
+            type="file"
+            accept="image/*"
+            {...register("picture", {
+              required: "Please select picture!",
+            })}
+          />
+          <button disabled={!isValid} type="submit">
+            Сохранить
+          </button>
         </form>
-        { created && <PDFDownloadLink
-                    document={
-                        <MyDocument document={tasks[0]} />
-                    }
-                    fileName="post.pdf"  
-                >
-                    {({blob, url, loading, error}) => (loading ? 'Loading...' : 'Download')}
-        </PDFDownloadLink>}
-        {tasks.map((task) => 
-<>
-    <p key={task.number}>
-        Имя: {task.name} - Номер: {task.number} - Цветок: {task.flower}
-    </p>
-    <img src= {task.picture} alt="картинка" height={180} style={{
-                                width: '100%',
-                                objectFit: 'cover',
-                                objectPosition:'center'
-                              }} />
-    </>
-)}
-        </FeedbackForm>  
-        <div className="text-div">
+        {created && (
+          <PDFDownloadLink document={<MyDocument document={tasks[0]} />} fileName="post.pdf">
+            {({ blob, url, loading, error }) => (loading ? "Loading..." : "Download")}
+          </PDFDownloadLink>
+        )}
+        {tasks.map((task) => (
+          <>
+            <p key={task.number}>
+              Имя: {task.name} - Номер: {task.number} - Цветок: {task.flower}
+            </p>
+            <img
+              src={task.picture}
+              alt="картинка"
+              height={180}
+              style={{
+                width: "100%",
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
+            />
+          </>
+        ))}
+      </FeedbackForm>
+      <div className="text-div">
         <h2>Добро пожаловать в наш магазин цветов!</h2>
         <p>Мы с удовольствием поможем вам с выбором прекрасных цветов и оформлением букетов для любого случая.</p>
       </div>
@@ -198,7 +192,7 @@ const Contact: FC = () => {
         ></iframe>
       </div>
     </div>
-  )
+  );
 };
 
-export default Contact
+export default Contact;

@@ -1,8 +1,8 @@
-import React,{createContext} from 'react'
+import React, { createContext } from "react";
 
-interface IContext{
-    isAuth:boolean;
-    setIsAuth:React.Dispatch<React.SetStateAction<boolean>>
+interface IContext {
+  isAuth: boolean;
+  setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const ctx = createContext<IContext>({} as IContext)
+export const ctx = createContext<IContext>({} as IContext);

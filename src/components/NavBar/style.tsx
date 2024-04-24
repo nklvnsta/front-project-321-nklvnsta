@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Menu, Button } from 'antd';
+import styled from "styled-components";
+import { Menu, Button } from "antd";
 
 export const StyledMenu = styled(Menu)`
   margin-bottom: 2em;

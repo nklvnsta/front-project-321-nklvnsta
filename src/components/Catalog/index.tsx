@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Table, Button, Typography } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import styled from 'styled-components';
+import React, { FC, useEffect, useState } from "react";
+import { Table, Button, Typography } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import styled from "styled-components";
 
 const { Title } = Typography;
 
@@ -44,12 +44,12 @@ const Catalog: FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://mocki.io/v1/d4867d8b-b5d5-4a48-a4ab-79131b5809b8');
+      const response = await fetch("https://mocki.io/v1/d4867d8b-b5d5-4a48-a4ab-79131b5809b8");
       const data: IPerson[] = await response.json();
       setDataSource(data);
       setPages({ page: 1, maxPages: 1 });
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
 
     setLoading(false);
@@ -61,14 +61,14 @@ const Catalog: FC = () => {
 
   const columns: ColumnsType<IPerson> = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'City',
-      dataIndex: 'city',
-      key: 'city',
+      title: "City",
+      dataIndex: "city",
+      key: "city",
     },
   ];
 

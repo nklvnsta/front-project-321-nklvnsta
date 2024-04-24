@@ -1,51 +1,47 @@
-import React, { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { CATALOG, HOME, REVIEWS, CONTACT } from '../../app/routing/config';
-import { useAuth } from '../../hooks/useAuth';
-import { StyledMenu, StyledButton } from './style';
+import React, { FC, useState } from "react";
+import { Link } from "react-router-dom";
+import { CATALOG, HOME, REVIEWS, CONTACT } from "../../app/routing/config";
+import { useAuth } from "../../hooks/useAuth";
+import { StyledMenu, StyledButton } from "./style";
 
 const NavBar: FC = () => {
   const { isAuth, setIsAuth } = useAuth();
-  const [currentTheme, setCurrentTheme] = useState<'dark' | 'light'>('light');
+  const [currentTheme, setCurrentTheme] = useState<"dark" | "light">("light");
 
   const changeTheme = () => {
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", newTheme);
     setCurrentTheme(newTheme);
   };
 
   const items = [
     {
       label: <Link to={HOME}>Главная</Link>,
-      key: 'home',
+      key: "home",
     },
     {
       label: <Link to={CATALOG}>Каталог</Link>,
-      key: 'catalog',
+      key: "catalog",
     },
     {
       label: <Link to={REVIEWS}>Отзывы</Link>,
-      key: 'reviews',
+      key: "reviews",
     },
     {
       label: <Link to={CONTACT}>Контакты</Link>,
-      key: 'contact',
+      key: "contact",
     },
     {
       label: <StyledButton onClick={changeTheme}>Сменить тему</StyledButton>,
-      key: 'theme',
+      key: "theme",
     },
     {
-      label: (
-        <StyledButton onClick={() => setIsAuth(!isAuth)}>
-          {isAuth ? 'Выйти' : 'Войти'}
-        </StyledButton>
-      ),
-      key: 'auth',
+      label: <StyledButton onClick={() => setIsAuth(!isAuth)}>{isAuth ? "Выйти" : "Войти"}</StyledButton>,
+      key: "auth",
     },
   ];
 
-  return <StyledMenu mode="horizontal" defaultSelectedKeys={['home']} items={items} />;
+  return <StyledMenu mode="horizontal" defaultSelectedKeys={["home"]} items={items} />;
 };
 
 export default NavBar;
