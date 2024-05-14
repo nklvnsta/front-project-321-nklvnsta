@@ -16,10 +16,11 @@
 
     /* Linting */
     "strict": false,
+    "strictNullChecks": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src", "GeolocationComponent.js"],
+  "include": ["src", "GeolocationComponent.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
 import { ctx } from "../context";
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
 const ContextProvider: FC<Props> = ({ children }) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
