@@ -4,9 +4,9 @@ import { useAuth } from "../../hooks/useAuth";
 
 const { Text } = Typography;
 
-interface Props {
+type Props = {
   children: React.ReactNode;
-}
+};
 
 const RequiredAuth: FC<Props> = ({ children }) => {
   const { isAuth } = useAuth();
