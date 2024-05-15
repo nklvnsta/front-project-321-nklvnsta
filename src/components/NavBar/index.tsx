@@ -36,15 +36,7 @@ const NavBar: FC = () => {
       key: "theme",
     },
     {
-      label: (
-        <StyledButton
-          onClick={() => {
-            setIsAuth(!isAuth);
-          }}
-        >
-          {isAuth ? "Выйти" : "Войти"}
-        </StyledButton>
-      ),
+      label: <StyledButton onClick={() => setIsAuth(!isAuth)}>{isAuth ? "Выйти" : "Войти"}</StyledButton>,
       key: "auth",
     },
   ];

@@ -39,12 +39,7 @@ const Contact: FC = () => {
   });
   const [isLoading, setLoading] = useState<boolean>(true);
 
-  const delay = async (ms: number) =>
-    await new Promise((resolve) =>
-      setTimeout(() => {
-        setLoading(false);
-      }, ms),
-    );
+  const delay = (ms: number) => new Promise((res) => setTimeout(() => setLoading(false), ms));
 
   useEffect(() => {
     delay(2000);
@@ -74,7 +69,7 @@ const Contact: FC = () => {
 
     const { picture, name, number, flower } = data;
 
-    reader.readAsDataURL(picture[0] as unknown as Blob);
+    reader.readAsDataURL(picture[0]);
 
     reader.onload = () => {
       const newTask = {
