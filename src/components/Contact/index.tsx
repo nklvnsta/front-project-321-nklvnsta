@@ -11,7 +11,7 @@ const { Meta } = Card;
 const { Paragraph } = Typography;
 
 const StyledCard = styled(Card)`
-  margin-bottom: 16px;
+  margin-bottom: 15px;
   margin-top: 20px;
 `;
 
@@ -39,7 +39,12 @@ const Contact: FC = () => {
   });
   const [isLoading, setLoading] = useState<boolean>(true);
 
-  const delay = (ms: number) => new Promise((res) => setTimeout(() => setLoading(false), ms));
+  const delay = async (ms: number) =>
+    await new Promise((resolve) =>
+      setTimeout(() => {
+        setLoading(false);
+      }, ms),
+    );
 
   useEffect(() => {
     delay(2000);
@@ -69,7 +74,7 @@ const Contact: FC = () => {
 
     const { picture, name, number, flower } = data;
 
-    reader.readAsDataURL(picture[0]);
+    reader.readAsDataURL(picture[0] as unknown as Blob);
 
     reader.onload = () => {
       const newTask = {

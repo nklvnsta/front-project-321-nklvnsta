@@ -1,7 +1,8 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useRef } from "react";
 import { Table, Button, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import styled from "styled-components";
+import axios from 'axios';
 
 const { Title } = Typography;
 
@@ -28,63 +29,88 @@ const NavigationButton = styled(Button)`
   margin: 0 8px;
 `;
 
-const LIMIT = 10;
-
-interface IPerson {
+interface UniversityData {
+  country: string;
   name: string;
-  city: string;
 }
 
+const columns: ColumnsType<UniversityData> = [
+  {
+    title: 'Страна',
+    dataIndex: 'country',
+    key: 'country',
+  },
+  {
+    title: 'Название университета',
+    dataIndex: 'name',
+    key: 'name',
+  },
+];
+
+const LIMIT_LIST_SCHOOL = 10;
+
 const Catalog: FC = () => {
-  const [pages, setPages] = useState({ page: 1, maxPages: 1 });
-  const [dataSource, setDataSource] = useState<IPerson[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [dataSource, setDataSource] = useState<UniversityData[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [fetching, setFetching] = useState<boolean>(false);
 
-  const getData = async (page: number, limit: number) => {
+  const loaderRef = useRef<HTMLDivElement>(null);
+
+  const getUniversity = async (page: number, limit: number) => {
     setLoading(true);
-
     try {
-      const response = await fetch("https://mocki.io/v1/d4867d8b-b5d5-4a48-a4ab-79131b5809b8");
-      const data: IPerson[] = await response.json();
-      setDataSource(data);
-      setPages({ page: 1, maxPages: 1 });
+      const response = await axios.get<UniversityData[]>(`http://universities.hipolabs.com/search?offset=${(page - 1) * limit}&limit=${limit}`);
+      setDataSource(prevData => [...prevData, ...response.data]);    
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching university data:", error);
     }
-
     setLoading(false);
-  };
+    setFetching(false);
+  }
 
   useEffect(() => {
-    getData(1, LIMIT);
-  }, []);
+    getUniversity(page, LIMIT_LIST_SCHOOL);
+  }, [page]);
 
-  const columns: ColumnsType<IPerson> = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "City",
-      dataIndex: "city",
-      key: "city",
-    },
-  ];
+  useEffect(() => {
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      const target = entries[0];
+      if (target.isIntersecting && !fetching) {
+        setFetching(true);
+        setPage(prevPage => prevPage + 1);
+      }
+    };
+
+    const options = {
+      threshold: 1.0
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [loaderRef, fetching]);
 
   return (
     <StyledContainer>
-      <Title level={3}>Каталог</Title>
+      <Title level={3}>Каталог университетов</Title>
       <StyledTable dataSource={dataSource} columns={columns} loading={isLoading} pagination={false} />
       <NavigationButtons>
-        <NavigationButton onClick={() => setPages({ page: 1, maxPages: 1 })} disabled={true}>
+        <NavigationButton onClick={() => setPage(page - 1)} disabled={page === 1}>
           Назад
         </NavigationButton>
-        <p>{pages.page}</p>
-        <NavigationButton disabled={true} onClick={() => setPages({ page: 1, maxPages: 1 })}>
-          Вперёд
-        </NavigationButton>
+        <p>{page}</p>
+        <NavigationButton onClick={() => setPage(page + 1)}>Вперёд</NavigationButton>
       </NavigationButtons>
+      <div ref={loaderRef} />
     </StyledContainer>
   );
 };
