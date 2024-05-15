@@ -11,7 +11,7 @@ const { Meta } = Card;
 const { Paragraph } = Typography;
 
 const StyledCard = styled(Card)`
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   margin-top: 20px;
 `;
 
