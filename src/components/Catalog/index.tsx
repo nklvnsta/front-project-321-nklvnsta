@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState, useRef } from "react";
 import { Table, Button, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import styled from "styled-components";
-import axios from 'axios';
+import axios from "axios";
 
 const { Title } = Typography;
 

@@ -17,9 +17,9 @@ const StyledCard = styled(Card)`
 
 interface IMyForm {
   name: string;
-  number: number;
+  number: string; // Changed number to string for consistency
   flower: string;
-  picture: string;
+  picture: Blob;
 }
 
 interface IContact {
@@ -30,51 +30,29 @@ interface IContact {
 
 const Contact: FC = () => {
   const {
-    register, // метод для регистрации вашего инпута, для дальнейшей работы с ним
-    handleSubmit, // метод для получения данных формы, если валидация прошла успешна
-    formState: { errors, isValid }, // errors - список ошибок валидации для всех полей формы
-    reset, // метод для очистки полей формы
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
   } = useForm<IMyForm>({
-    mode: "onBlur", // парметр onBlur - отвечает за запуск валидации при не активном состоянии поля
+    mode: "onBlur",
   });
   const [isLoading, setLoading] = useState<boolean>(true);
+  const [created, setCreated] = useState<boolean>(false);
+  const [tasks, setTasks] = useState<IMyForm[]>([]);
+  const workingHours = "Пн-Вс: 10:00 - 20:00";
 
-  const delay = async (ms: number) =>
-    await new Promise((resolve) =>
-      setTimeout(() => {
-        setLoading(false);
-      }, ms),
-    );
+  const delay = async (ms: number) => await new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
-    delay(2000);
+    delay(2000).then(() => setLoading(false));
   }, []);
-
-  const contacts: IContact[] = [
-    {
-      title: "Адрес",
-      description: "ул. Михалковская, 7к3",
-      icon: <EnvironmentOutlined />,
-    },
-    {
-      title: "Телефон",
-      description: "+7 (977) 118-1899",
-      icon: <PhoneOutlined />,
-    },
-  ];
-
-  const [created, setCreated] = useState<boolean>(false);
-
-  const [tasks, setTasks] = useState<IMyForm[]>([]);
-
-  const workingHours = "Пн-Вс: 10:00 - 20:00";
 
   const saveElement: SubmitHandler<IMyForm> = (data) => {
     const reader = new FileReader();
-
     const { picture, name, number, flower } = data;
 
-    reader.readAsDataURL(picture[0] as unknown as Blob);
+    reader.readAsDataURL(picture);
 
     reader.onload = () => {
       const newTask = {
@@ -111,75 +89,44 @@ const Contact: FC = () => {
         <h2>Форма обратной связи:</h2>
         <form onSubmit={handleSubmit(saveElement)}>
           <label htmlFor="name">Имя:</label>
-          <input
-            {...register("name", {
-              required: "Поле обязательно для заполнения",
-              minLength: {
-                value: 5,
-                message: "Нужно больше символов",
-              },
-            })}
-          />
-          <div>{errors.name?.message}</div>
+          <input {...register("name", { required: "Поле обязательно для заполнения", minLength: 5 })} />
+          <div>{errors.name && errors.name.message}</div>
           <label htmlFor="number">Номер телефона:</label>
           <input
             {...register("number", {
               required: "Поле обязательно для заполнения",
-              minLength: {
-                value: 5,
-                message: "Нужно больше символов",
-              },
               pattern: {
                 value: /^\+7\d{10}$/,
                 message: "Введите номер в формате +7XXXXXXXXXX",
               },
             })}
           />
-          <div>{errors.number?.message}</div>
+          <div>{errors.number && errors.number.message}</div>
           <label htmlFor="flower">Цветок:</label>
-          <input
-            {...register("flower", {
-              required: "Поле обязательно для заполнения",
-              minLength: {
-                value: 5,
-                message: "Нужно больше символов",
-              },
-            })}
-          />
+          <input {...register("flower", { required: "Поле обязательно для заполнения", minLength: 5 })} />
           <label htmlFor="picture">Картинка:</label>
           <input
             id="picture"
             type="file"
             accept="image/*"
-            {...register("picture", {
-              required: "Please select picture!",
-            })}
+            {...register("picture", { required: "Please select picture!" })}
           />
           <button disabled={!isValid} type="submit">
             Сохранить
           </button>
         </form>
-        {created && (
+        {created && tasks.length > 0 && (
           <PDFDownloadLink document={<MyDocument document={tasks[0]} />} fileName="post.pdf">
-            {({ blob, url, loading, error }) => (loading ? "Loading..." : "Download")}
+            {({ loading }) => (loading ? "Loading..." : "Download")}
           </PDFDownloadLink>
         )}
-        {tasks.map((task) => (
-          <>
-            <p key={task.number}>
+        {tasks.map((task, index) => (
+          <div key={index}>
+            <p>
               Имя: {task.name} - Номер: {task.number} - Цветок: {task.flower}
             </p>
-            <img
-              src={task.picture}
-              alt="картинка"
-              height={180}
-              style={{
-                width: "100%",
-                objectFit: "cover",
-                objectPosition: "center",
-              }}
-            />
-          </>
+            <img src={task.picture} alt="картинка" height={180} style={{ width: "100%", objectFit: "cover", objectPosition: "center" }} />
+          </div>
         ))}
       </FeedbackForm>
       <div className="text-div">
