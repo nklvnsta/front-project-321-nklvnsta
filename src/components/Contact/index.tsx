@@ -42,7 +42,7 @@ const Contact: FC = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [created, setCreated] = useState<boolean>(false);
   const [tasks, setTasks] = useState<IMyForm[]>([]);
-  const workingHours = "Пн-Вс: 10:00 - 20:00";
+  const workingHours = "Пн-Вс: 15:00 - 20:00";
 
   const contacts: IContact[] = [
     {
