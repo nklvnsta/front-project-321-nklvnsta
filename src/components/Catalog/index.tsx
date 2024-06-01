@@ -41,7 +41,7 @@ const columns: ColumnsType<UniversityData> = [
     key: 'country',
   },
   {
-    title: 'Название университета',
+    title: "Название университета",
     dataIndex: 'name',
     key: 'name',
   },
@@ -61,7 +61,7 @@ const Catalog: FC = () => {
     setLoading(true);
     try {
       const response = await axios.get<UniversityData[]>(`http://universities.hipolabs.com/search?offset=${(page - 1) * limit}&limit=${limit}`);
-      setDataSource(prevData => [...prevData, ...response.data]);    
+      setDataSource((prevData) => [...prevData, ...response.data]);
     } catch (error) {
       console.error("Error fetching university data:", error);
     }
@@ -78,7 +78,7 @@ const Catalog: FC = () => {
       const target = entries[0];
       if (target.isIntersecting && !fetching) {
         setFetching(true);
-        setPage(prevPage => prevPage + 1);
+        setPage((prevPage) => prevPage + 1);
       }
     };
 
@@ -102,7 +102,7 @@ const Catalog: FC = () => {
   return (
     <StyledContainer>
       <Title level={3}>Каталог университетов</Title>
-      <StyledTable dataSource={dataSource} columns={columns} loading={isLoading} pagination={false} />
+      <StyledTable dataSource={dataSource} columns={columns} loading={isLoading} pagination={false} rowKey="name" />
       <NavigationButtons>
         <NavigationButton onClick={() => setPage(page - 1)} disabled={page === 1}>
           Назад
