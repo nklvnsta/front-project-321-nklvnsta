@@ -1,11 +1,13 @@
 import React, { FC, useState, useEffect } from "react";
 import { Card, Skeleton, Avatar, Typography } from "antd";
-import { EnvironmentOutlined, PhoneOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import { ClockCircleOutlined, EnvironmentOutlined, PhoneOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MyDocument from "../FileDcument/index";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { FeedbackForm } from "./style";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { IDocument } from "../FileDcument/types";
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -19,7 +21,7 @@ interface IMyForm {
   name: string;
   number: string; // Changed number to string for consistency
   flower: string;
-  picture: Blob;
+  picture: File | string;
 }
 
 interface IContact {
@@ -42,17 +44,32 @@ const Contact: FC = () => {
   const [tasks, setTasks] = useState<IMyForm[]>([]);
   const workingHours = "Пн-Вс: 10:00 - 20:00";
 
+  const contacts: IContact[] = [
+    {
+      title: "Адрес",
+      description: "ул. Михалковская, 7к3",
+      icon: <EnvironmentOutlined />,
+    },
+    {
+      title: "Телефон",
+      description: "+7 (977) 118-1899",
+      icon: <PhoneOutlined />,
+    },
+  ];
+
   const delay = async (ms: number) => await new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
-    delay(2000).then(() => setLoading(false));
+    delay(2000).then(() => {
+      setLoading(false);
+    });
   }, []);
 
   const saveElement: SubmitHandler<IMyForm> = (data) => {
     const reader = new FileReader();
     const { picture, name, number, flower } = data;
 
-    reader.readAsDataURL(picture);
+    reader.readAsDataURL(picture as File);
 
     reader.onload = () => {
       const newTask = {
@@ -90,7 +107,7 @@ const Contact: FC = () => {
         <form onSubmit={handleSubmit(saveElement)}>
           <label htmlFor="name">Имя:</label>
           <input {...register("name", { required: "Поле обязательно для заполнения", minLength: 5 })} />
-          <div>{errors.name && errors.name.message}</div>
+          <div>{errors?.name?.message}</div>
           <label htmlFor="number">Номер телефона:</label>
           <input
             {...register("number", {
@@ -101,7 +118,7 @@ const Contact: FC = () => {
               },
             })}
           />
-          <div>{errors.number && errors.number.message}</div>
+          <div>{errors?.number?.message}</div>
           <label htmlFor="flower">Цветок:</label>
           <input {...register("flower", { required: "Поле обязательно для заполнения", minLength: 5 })} />
           <label htmlFor="picture">Картинка:</label>
@@ -125,7 +142,12 @@ const Contact: FC = () => {
             <p>
               Имя: {task.name} - Номер: {task.number} - Цветок: {task.flower}
             </p>
-            <img src={task.picture} alt="картинка" height={180} style={{ width: "100%", objectFit: "cover", objectPosition: "center" }} />
+            <img
+              src={task.picture as string}
+              alt="картинка"
+              height={180}
+              style={{ width: "100%", objectFit: "cover", objectPosition: "center" }}
+            />
           </div>
         ))}
       </FeedbackForm>

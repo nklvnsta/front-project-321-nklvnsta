@@ -1,6 +1,6 @@
 export interface IDocument {
   name: string;
-  number: number;
+  number: string;
   flower: string;
-  picture: string;
+  picture: string | File;
 }
