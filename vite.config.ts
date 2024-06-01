@@ -4,6 +4,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base:"front-project-321-nklvnsta",
   plugins: [react(), VitePWA({
     registerType: 'prompt', 
     includeAssets: ['favicon.ico', 'logo.png', 'logo.svg'],
